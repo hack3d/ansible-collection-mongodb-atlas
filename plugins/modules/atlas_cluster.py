@@ -196,6 +196,7 @@ def main():
             data.update({var: module.params[var]})
 
     try:
+        raise Exception(data)
         atlas = AtlasAPIObject(
             module=module,
             path="/clusters",

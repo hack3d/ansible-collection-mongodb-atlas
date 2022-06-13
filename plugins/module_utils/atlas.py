@@ -87,12 +87,12 @@ class AtlasAPIObject:
         return False
 
     def create(self):
-        raise Exception(self.data)
         ret = self.call_url(
             path=self.path,
             data=self.module.jsonify(self.data),
             method="POST",
         )
+        raise Exception(ret)
         return ret
 
     def delete(self):

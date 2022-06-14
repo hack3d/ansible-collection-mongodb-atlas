@@ -78,12 +78,12 @@ class AtlasAPIObject:
             additional_path = "/admin"
     
         path = "{}{}".format(self.path, additional_path)
-        
-        if self.object_name != None:
-            path = "{}/{}".format(path, quote(self.data[self.object_name], ""))
 
         if self.path == "/privateEndpoint/endpointService":
             path = "/privateEndpoint/{}/endpointService".format(self.module.params["providerName"])
+        else:
+            if self.object_name != None:
+                path = "{}/{}".format(path, quote(self.data[self.object_name], ""))
 
         ret = self.call_url(
             path=path

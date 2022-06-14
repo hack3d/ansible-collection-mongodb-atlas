@@ -28,7 +28,10 @@ class AtlasAPIObject:
         self.path = path
         self.data = data
         self.groupId = groupId
-        self.object_name = object_name
+        if object_name == None:
+            self.object_name = ""
+        else:
+            self.object_name = object_name
         self.data_is_array = data_is_array
 
         self.module.params["url_username"] = self.module.params["apiUsername"]

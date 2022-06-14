@@ -22,7 +22,7 @@ class AtlasAPIObject:
     module = None
 
     def __init__(
-        self, module, object_name, groupId, path, data, data_is_array=False
+        self, module, groupId, path, data, object_name=None, data_is_array=False
     ):
         self.module = module
         self.path = path

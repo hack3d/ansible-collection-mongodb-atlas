@@ -28,10 +28,7 @@ class AtlasAPIObject:
         self.path = path
         self.data = data
         self.groupId = groupId
-        if object_name == None:
-            self.object_name = ""
-        else:
-            self.object_name = object_name
+        self.object_name = object_name
         self.data_is_array = data_is_array
 
         self.module.params["url_username"] = self.module.params["apiUsername"]
@@ -79,11 +76,13 @@ class AtlasAPIObject:
         additional_path = ""
         if self.path == "/databaseUsers":
             additional_path = "/admin"
+        path = "{}{}".format(self.path, additional_path)
+        
+        if self.object_name != None:
+            path = "{}/{}".format(path, quote(self.data[self.object_name], ""))
+
         ret = self.call_url(
-            path=self.path
-            + additional_path
-            + "/"
-            + quote(self.data[self.object_name], "")
+            path=path
         )
         if ret["code"] == 200:
             return True

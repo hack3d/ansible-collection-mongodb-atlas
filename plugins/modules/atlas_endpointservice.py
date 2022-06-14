@@ -62,6 +62,11 @@ def main():
         argument_spec=argument_spec, supports_check_mode=True
     )
 
+    data = {
+        "providerName": module.params["providerName"],
+        "region": module.params["region"],
+    }
+
     try:
         atlas = AtlasAPIObject(
             module=module,

@@ -166,6 +166,32 @@ class AtlasAPIObject:
                     diff["after"][key] = "{val}".format(val=data_from_task[key])
         return diff
 
+    def get(self):
+        additional_path = ""
+        if self.path == "/databaseUsers":
+            additional_path = "/admin"
+
+        path = "{}{}".format(self.path, additional_path)
+
+        if self.path == "/privateEndpoint/endpointService":
+            path = "/privateEndpoint/{}/endpointService".format(self.module.params["providerName"])
+        else:
+            if self.object_name != None:
+                path = "{}/{}".format(path, quote(self.data[self.object_name], ""))
+        
+        ret = self.call_url(
+            path=path,
+            method="GET",
+        )
+
+        data_from_atlas = json.loads(self.module.jsonify(ret["data"]))
+        
+        if self.path == "/privateEndpoint/endpointService":
+            for x in data_from_atlas:
+                if x['regionName'] == self.module.params["region"]:
+                    return x
+        return data_from_atlas
+
     def update(self, state):
         changed = False
         diff_result = {"before": "", "after": ""}

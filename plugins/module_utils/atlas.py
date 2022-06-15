@@ -156,8 +156,6 @@ class AtlasAPIObject:
         data_from_atlas = json.loads(self.module.jsonify(ret["data"]))
         data_from_task = json.loads(self.module.jsonify(self.data))
 
-        #raise Exception("Data: " + json.dumps(data_from_atlas))
-
         diff = defaultdict(dict)
         if self.path == "/privateEndpoint/endpointService":
             for x in data_from_atlas:
@@ -264,6 +262,8 @@ class AtlasAPIObject:
                         if ret["code"] == 201:
                             changed = True
                             diff_result.update({"after": "state: created\n"})
+                        if self.path == "/privateEndpoint/AZURE/endpointService" and ret["code"] == 409:
+                            diff_result.update({"aftter": "state: created\n"})
                         else:
                             self.module.fail_json(
                                 msg="bad return code while creating: %d. Error message: %s, Data: %s, Path: %s"

@@ -149,13 +149,21 @@ class AtlasAPIObject:
         data_from_atlas = json.loads(self.module.jsonify(ret["data"]))
         data_from_task = json.loads(self.module.jsonify(self.data))
 
-        raise Exception("Data: " + json.dumps(data_from_atlas))
+        #raise Exception("Data: " + json.dumps(data_from_atlas))
 
         diff = defaultdict(dict)
-        for key, value in data_from_atlas.items():
-            if key in data_from_task.keys() and value != data_from_task[key]:
-                diff["before"][key] = "{val}".format(val=value)
-                diff["after"][key] = "{val}".format(val=data_from_task[key])
+        if self.path == "/privateEndpoint/endpointService":
+            for x in data_from_atlas:
+                if x['regionName'] == self.module.params["region"]:
+                    for key, value in x.items():
+                        if key in data_from_task.keys() and value != data_from_task[key]:
+                            diff["before"][key] = "{val}".format(val=value)
+                            diff["after"][key] = "{val}".format(val=data_from_task[key])
+        else:
+            for key, value in data_from_atlas.items():
+                if key in data_from_task.keys() and value != data_from_task[key]:
+                    diff["before"][key] = "{val}".format(val=value)
+                    diff["after"][key] = "{val}".format(val=data_from_task[key])
         return diff
 
     def update(self, state):

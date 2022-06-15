@@ -149,7 +149,7 @@ class AtlasAPIObject:
         data_from_atlas = json.loads(self.module.jsonify(ret["data"]))
         data_from_task = json.loads(self.module.jsonify(self.data))
 
-        raise Exception("Data: " + data_from_atlas)
+        raise Exception("Data: " + json.dumps(data_from_atlas))
 
         diff = defaultdict(dict)
         for key, value in data_from_atlas.items():

@@ -245,8 +245,8 @@ class AtlasAPIObject:
                         changed = True
                     else:
                         self.module.fail_json(
-                            msg="bad return code while modifying: %d. Error message: %s"
-                            % (ret["code"], ret["error"])
+                            msg="bad return code while modifying: %d. Error message: %s, Diff: %s"
+                            % (ret["code"], ret["error"], json.dumps(diff_result))
                         )
 
         else:

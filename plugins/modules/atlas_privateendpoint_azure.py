@@ -79,7 +79,7 @@ def main():
     try:
         atlas = AtlasAPIObject(
             module=module,
-            path="/privateEndpoint/AZURE/endpointService/",
+            path="/privateEndpoint/AZURE/endpointService",
             object_name="endpointServiceId",
             groupId=module.params["groupId"],
             data=data,

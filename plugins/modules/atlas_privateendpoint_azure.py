@@ -3,8 +3,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-from plugins.modules.atlas_endpointservice import EXAMPLES
-
 __metaclass__ = type
 
 ANSIBLE_METADATA = {
@@ -96,3 +94,6 @@ def main():
         data=atlas.data,
         diff=diff,
     )
+
+if __name__ == "__main__":
+    main()

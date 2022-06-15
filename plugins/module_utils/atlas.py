@@ -5,6 +5,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import json
+import urllib.parse
 from collections import defaultdict
 
 from ansible.module_utils.urls import fetch_url
@@ -81,6 +82,8 @@ class AtlasAPIObject:
 
         if self.path == "/privateEndpoint/endpointService":
             path = "/privateEndpoint/{}/endpointService".format(self.module.params["providerName"])
+        elif self.path == "/privateEndpoint/AZURE/endpointService":
+            path = "/privateEndpoint/AZURE/endpointService/{}/endpoint/{}".format(self.data[self.object_name], urllib.parse.quote(self.data["id"]))
         else:
             if self.object_name != None:
                 path = "{}/{}".format(path, quote(self.data[self.object_name], ""))

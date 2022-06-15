@@ -262,7 +262,7 @@ class AtlasAPIObject:
                         if ret["code"] == 201:
                             changed = True
                             diff_result.update({"after": "state: created\n"})
-                        if self.path == "/privateEndpoint/AZURE/endpointService/{}/endpoint".format(self.data[self.object_name]) and ret["code"] == 409:
+                        if self.path.startswith("/privateEndpoint/AZURE/endpointService/") and ret["code"] == 409:
                             diff_result.update({"aftter": "state: created\n"})
                         else:
                             self.module.fail_json(

@@ -263,8 +263,8 @@ class AtlasAPIObject:
                             diff_result.update({"after": "state: created\n"})
                         else:
                             self.module.fail_json(
-                                msg="bad return code while creating: %d. Error message: %s, Data: %s"
-                                % (ret["code"], ret["error"], self.data)
+                                msg="bad return code while creating: %d. Error message: %s, Data: %s, Path: %s"
+                                % (ret["code"], ret["error"], self.data, self.path)
                             )
                     except Exception as e:
                         self.module.fail_json(

@@ -96,7 +96,7 @@ class AtlasAPIObject:
         if self.path == "/privateEndpoint/AZURE/endpointService/":
             self.path = "{}/{}/endpoint".format(self.path, self.data[self.object_name])
             self.data.pop(self.object_name, None)
-            
+
         ret = self.call_url(
             path=self.path,
             data=self.module.jsonify(self.data),
@@ -263,8 +263,8 @@ class AtlasAPIObject:
                             diff_result.update({"after": "state: created\n"})
                         else:
                             self.module.fail_json(
-                                msg="bad return code while creating: %d. Error message: %s"
-                                % (ret["code"], ret["error"])
+                                msg="bad return code while creating: %d. Error message: %s, Data: %s"
+                                % (ret["code"], ret["error"], self.data)
                             )
                     except Exception as e:
                         self.module.fail_json(

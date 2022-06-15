@@ -73,6 +73,7 @@ def main():
     data = {
         "id": module.params["privateEndpointId"],
         "privateEndpointIPAddress": module.params["privateEndpointIPAddress"],
+        "endpointServiceId": module.params["endpointServiceId"],
     }
 
     try:

@@ -93,6 +93,8 @@ class AtlasAPIObject:
         return False
 
     def create(self):
+        if self.path == "/privateEndpoint/AZURE/endpointService/":
+            self.path = "{}/{}/endpoint".format(self.path, self.data[self.object_name])
         ret = self.call_url(
             path=self.path,
             data=self.module.jsonify(self.data),

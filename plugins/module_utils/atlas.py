@@ -149,6 +149,8 @@ class AtlasAPIObject:
         data_from_atlas = json.loads(self.module.jsonify(ret["data"]))
         data_from_task = json.loads(self.module.jsonify(self.data))
 
+        raise Exception("Data: " + data_from_atlas)
+
         diff = defaultdict(dict)
         for key, value in data_from_atlas.items():
             if key in data_from_task.keys() and value != data_from_task[key]:

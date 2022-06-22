@@ -92,7 +92,7 @@ class AtlasAPIObject:
             path=path
         )
         if self.path == "/privateEndpoint/AZURE/endpointService":
-            raise Exception("Status: {}".format(ret["code"]))
+            raise Exception("Status: {}, Path: {}".format(ret["code"], path))
         if ret["code"] == 200:
             return True
         return False

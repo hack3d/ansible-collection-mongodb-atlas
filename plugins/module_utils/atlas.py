@@ -83,7 +83,7 @@ class AtlasAPIObject:
         if self.path == "/privateEndpoint/endpointService":
             path = "/privateEndpoint/{}/endpointService".format(self.module.params["providerName"])
         elif self.path == "/privateEndpoint/AZURE/endpointService":
-            path = "/privateEndpoint/AZURE/endpointService/{}/endpoint/{}".format(self.data[self.object_name], urllib.parse.urlencode(self.data["id"]))
+            path = "/privateEndpoint/AZURE/endpointService/{}/endpoint/{}".format(self.data[self.object_name], urllib.parse.quote_plus(self.data["id"]))
         else:
             if self.object_name != None:
                 path = "{}/{}".format(path, quote(self.data[self.object_name], ""))

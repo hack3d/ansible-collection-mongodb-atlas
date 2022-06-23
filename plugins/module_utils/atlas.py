@@ -125,15 +125,18 @@ class AtlasAPIObject:
         additional_path = ""
         if self.path == "/databaseUsers":
             additional_path = "/admin"
-        
-        ret = self.call_url(
-            path=self.path
-            + additional_path
-            + "/"
-            + quote(self.data[self.object_name], ""),
-            data=self.module.jsonify(self.data),
-            method="PATCH",
-        )
+        if self.path != "/privateEndpoint/AZURE/endpointService":
+            ret = self.call_url(
+                path=self.path
+                + additional_path
+                + "/"
+                + quote(self.data[self.object_name], ""),
+                data=self.module.jsonify(self.data),
+                method="PATCH",
+            )
+        else:
+            ret = []
+            ret["code"] = 200
         return ret
 
     def diff(self):
@@ -145,6 +148,8 @@ class AtlasAPIObject:
 
         if self.path == "/privateEndpoint/endpointService":
             path = "/privateEndpoint/{}/endpointService".format(self.module.params["providerName"])
+        elif self.path == "/privateEndpoint/AZURE/endpointService":
+            path = "/privateEndpoint/AZURE/endpointService/{}/endpoint/{}".format(self.data[self.object_name], urllib.parse.quote_plus(self.data["id"]))
         else:
             if self.object_name != None:
                 path = "{}/{}".format(path, quote(self.data[self.object_name], ""))

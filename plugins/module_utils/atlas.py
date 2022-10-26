@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, division, print_function
+from shutil import ExecError
 
 __metaclass__ = type
 
@@ -87,10 +88,14 @@ class AtlasAPIObject:
         else:
             if self.object_name != None:
                 path = "{}/{}".format(path, quote(self.data[self.object_name], ""))
+        
 
         ret = self.call_url(
             path=path
         )
+
+        if ret["code"] == 200 and self.path == "/privateEndpoint/endpointService" and ret["data"] == []:
+            return False
 
         if ret["code"] == 200:
             return True
@@ -270,7 +275,7 @@ class AtlasAPIObject:
                             diff_result.update({"after": "state: created\n"})
                         if self.path.startswith("/privateEndpoint/AZURE/endpointService/") and ret["code"] == 409:
                             diff_result.update({"aftter": "state: created\n"})
-                        if ret["code"] != 201 or (ret["code"] != 409 and self.path.startswith("/privateEndpoint/AZURE/endpointService/")):
+                        if ret["code"] != 201 and (ret["code"] != 409 and self.path.startswith("/privateEndpoint/AZURE/endpointService/")):
                             self.module.fail_json(
                                 msg="bad return code while creating: %d. Error message: %s, Data: %s, Path: %s"
                                 % (ret["code"], ret["error"], self.data, self.path)
